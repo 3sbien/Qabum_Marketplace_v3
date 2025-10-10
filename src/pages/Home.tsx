@@ -1,9 +1,11 @@
-// Home Page for Qabum Marketplace
+import { signIn } from "next-auth/react";
+
 export default function Home() {
   return (
-    <div className="text-center">
+    <main style={{ padding: 24 }}>
       <h1>Welcome to Qabum™ Marketplace</h1>
-      <p>Empowering ethical trade and reputation-driven commerce</p>
-    </div>
+      <p>This is the official MVP demo built for investor-grade presentation.</p>
+      <button onClick={() => signIn("google")}>Sign in with Google</button>
+    </main>
   );
 }
