@@ -1,14 +1,14 @@
 // pages/api/stores/index.js
-const { dbConnect } = require("@/lib/db");
-const Store = require("@/models/Store");
+const { dbConnect } = require("../../../lib/db");
+const Store = require("../../../models/Store");
 
-// Intentamos cargar NextAuth solo si está disponible en tu proyecto
+// Cargamos NextAuth solo si está disponible
 let getServerSession, authOptions;
 try {
   ({ getServerSession } = require("next-auth/next"));
-  ({ authOptions } = require("../auth/[...nextauth]")); // ajusta si tu archivo está en otra ruta
+  ({ authOptions } = require("../auth/[...nextauth]")); // ruta relativa correcta
 } catch (_) {
-  // Si no existe NextAuth en tu repo, podrás habilitarlo después.
+  // Si no existe NextAuth, las mutaciones quedarán deshabilitadas
 }
 
 const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "")
@@ -17,19 +17,19 @@ const ADMIN_EMAILS = (process.env.ADMIN_EMAILS || "")
   .filter(Boolean);
 
 async function isAdmin(req, res) {
-  if (!getServerSession || !authOptions) return false; // si no está NextAuth, desactivamos mutaciones
+  if (!getServerSession || !authOptions) return false;
   const session = await getServerSession(req, res, authOptions);
   const email = session?.user?.email?.toLowerCase();
   return !!email && ADMIN_EMAILS.includes(email);
 }
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   try {
     await dbConnect();
 
     if (req.method === "GET") {
-      // Listado básico de tiendas activas (para admin UI o consumo posterior)
       const { q = "", category = "", page = "1", limit = "12" } = req.query;
+
       const pageNum = Math.max(1, parseInt(page, 10) || 1);
       const limitNum = Math.min(50, Math.max(1, parseInt(limit, 10) || 12));
       const skip = (pageNum - 1) * limitNum;
@@ -54,7 +54,6 @@ export default async function handler(req, res) {
     }
 
     if (req.method === "POST") {
-      // Crear tienda, protegido para admins
       if (!(await isAdmin(req, res))) {
         return res.status(401).json({ error: "Unauthorized" });
       }
@@ -74,7 +73,6 @@ export default async function handler(req, res) {
         isActive = true,
       } = req.body || {};
 
-      // Validaciones mínimas
       if (!name || !category || !email || !phone || !location) {
         return res.status(400).json({ error: "Missing required fields" });
       }
@@ -103,4 +101,4 @@ export default async function handler(req, res) {
     console.error("API /stores error:", err);
     return res.status(500).json({ error: "Server error", detail: err?.message || String(err) });
   }
-}
+};
