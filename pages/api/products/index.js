@@ -1,7 +1,8 @@
-import { dbConnect } from "@/lib/db";
-const Product = require("@/models/Product");
+// pages/api/products/index.js
+const { dbConnect } = require("../../../lib/db");
+const Product = require("../../../models/Product");
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   try {
     await dbConnect();
 
@@ -40,10 +41,9 @@ export default async function handler(req, res) {
       });
     }
 
-    // Otros métodos aún no permitidos aquí
     return res.status(405).json({ error: "Method Not Allowed" });
   } catch (err) {
     console.error("GET /api/products error:", err);
     return res.status(500).json({ error: "Server error", detail: err?.message || String(err) });
   }
-}
+};
