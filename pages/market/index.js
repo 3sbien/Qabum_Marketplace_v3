@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
-import { dbConnect } from "@/lib/db";
-const Product = require("@/models/Product");
+import { dbConnect } from "../../lib/db";
+const Product = require("../../models/Product");
 
 export default function MarketPage({ items, page, pages }) {
   return (
@@ -21,7 +21,13 @@ export default function MarketPage({ items, page, pages }) {
                 className="block rounded-2xl border hover:shadow-md transition p-4"
               >
                 <div className="relative w-full aspect-square mb-3 overflow-hidden rounded-xl bg-gray-50">
-                  <Image src={img} alt={p.name} fill sizes="(max-width:768px) 100vw, 33vw" className="object-cover" />
+                  <Image
+                    src={img}
+                    alt={p.name}
+                    fill
+                    sizes="(max-width:768px) 100vw, 33vw"
+                    className="object-cover"
+                  />
                 </div>
                 <h3 className="text-lg font-medium line-clamp-1">{p.name}</h3>
                 <p className="text-sm text-gray-600 line-clamp-2">{p.description}</p>
@@ -40,7 +46,9 @@ export default function MarketPage({ items, page, pages }) {
             <Link
               key={n}
               href={`/market?page=${n}`}
-              className={`px-3 py-1 rounded ${Number(page) === n ? "bg-gray-200" : "bg-gray-100 hover:bg-gray-200"}`}
+              className={`px-3 py-1 rounded ${
+                Number(page) === n ? "bg-gray-200" : "bg-gray-100 hover:bg-gray-200"
+              }`}
             >
               {n}
             </Link>
