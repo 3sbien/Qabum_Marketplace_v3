@@ -1,32 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-// Server-side guard: solo admins pueden entrar
-export async function getServerSideProps(ctx) {
-  try {
-    const { getServerSession } = require("next-auth/next");
-    const { authOptions } = require("@/pages/api/auth/[...nextauth]");
-    const session = await getServerSession(ctx.req, ctx.res, authOptions);
-
-    const email = session?.user?.email?.toLowerCase() || "";
-    const ADMINS = (process.env.ADMIN_EMAILS || "")
-      .split(",")
-      .map((s) => s.trim().toLowerCase())
-      .filter(Boolean);
-
-    if (!email || !ADMINS.includes(email)) {
-      return {
-        redirect: { destination: "/api/auth/signin", permanent: false },
-      };
-    }
-
-    return { props: {} };
-  } catch {
-    // Si next-auth no está disponible, no permitimos acceso
-    return { redirect: { destination: "/", permanent: false } };
-  }
-}
-
 export default function NewStorePage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -62,7 +36,6 @@ export default function NewStorePage() {
         setMsg(data?.error || "Error creating store");
       } else {
         setMsg("Store created successfully.");
-        // Opcional: redirigir al market o a otra página
         setTimeout(() => router.push("/market"), 800);
       }
     } catch (err) {
@@ -191,7 +164,9 @@ export default function NewStorePage() {
               max="100"
               className="mt-1 w-full rounded border p-2"
               value={form.platformFeePercentage}
-              onChange={(e) => setField("platformFeePercentage", Number(e.target.value))}
+              onChange={(e) =>
+                setField("platformFeePercentage", Number(e.target.value))
+              }
             />
           </label>
 
