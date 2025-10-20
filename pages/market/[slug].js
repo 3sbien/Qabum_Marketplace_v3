@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { dbConnect } from "@/lib/db";
-const Product = require("@/models/Product");
+import { dbConnect } from "../../lib/db";
+const Product = require("../../models/Product");
 
 export default function ProductDetail({ p }) {
   if (!p) {
@@ -36,7 +36,6 @@ export default function ProductDetail({ p }) {
 export async function getServerSideProps({ params }) {
   await dbConnect();
   const slug = params.slug.toLowerCase();
-
   const doc = await Product.findOne({ slug, isActive: true }).lean();
 
   return {
