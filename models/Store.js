@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 /**
  * Store (Negocio) para Ecuador con hasta 2 categorías
  * - RUC obligatorio (13 dígitos)
- * - Número de Establecimiento SRI (3 dígitos), p. ej. "001"
+ * - Establecimiento SRI (3 dígitos) p. ej. "001"
  * - Moneda por defecto USD
  * - IVA por defecto 0.15 (15 %)
  * - Máximo 2 categorías elegidas de la lista aprobada
@@ -22,10 +22,10 @@ const StoreSchema = new mongoose.Schema(
   {
     // Identidad y contacto
     name: { type: String, required: true, trim: true },
-    legalName: { type: String, default: "", trim: true }, // Razón social (si aplica)
+    legalName: { type: String, default: "", trim: true }, // Razón social (opcional)
     description: { type: String, default: "" },
 
-    // Ecuador: Identificación fiscal
+    // ECUADOR: Identificación fiscal
     ruc: {
       type: String,
       required: true,
@@ -39,7 +39,7 @@ const StoreSchema = new mongoose.Schema(
       match: [/^\d{3}$/, "Establishment must be a 3-digit code like 001"],
     },
 
-    // Contacto obligatorio
+    // Contacto
     email: { type: String, required: true, trim: true },
     website: { type: String, default: "" },
     phone: { type: String, required: true, trim: true },
@@ -51,7 +51,7 @@ const StoreSchema = new mongoose.Schema(
     // Imagen (URL)
     image: { type: String, default: "" },
 
-    // Configuración país/moneda/impuestos
+    // País/moneda/impuestos
     country: { type: String, default: "EC" },
     defaultCurrency: { type: String, default: "USD" }, // Ecuador USD
     ivaRate: { type: Number, default: 0.15, min: 0, max: 1 }, // 15 %
@@ -65,21 +65,18 @@ const StoreSchema = new mongoose.Schema(
       validate: [
         {
           validator: function (arr) {
-            // máximo 2
             return Array.isArray(arr) && arr.length >= 1 && arr.length <= 2;
           },
           message: "Select between 1 and 2 categories",
         },
         {
           validator: function (arr) {
-            // valores válidos
             return arr.every((c) => ALLOWED_CATEGORIES.includes(c));
           },
           message: "Invalid category found",
         },
         {
           validator: function (arr) {
-            // sin duplicados
             return new Set(arr).size === arr.length;
           },
           message: "Duplicate categories are not allowed",
