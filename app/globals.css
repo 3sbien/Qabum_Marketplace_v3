@@ -1,0 +1,7 @@
+/* Qabum: enlarge navbar logo on desktop only */
+@media (min-width: 768px) {
+  img[alt="Qabum"] {
+    height: 3rem !important;
+    width: auto !important;
+  }
+}
