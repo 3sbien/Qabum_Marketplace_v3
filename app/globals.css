@@ -2,7 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
-/* opcional: pequeños ajustes */
-html, body {
-  height: 100%;
+/* ---- Layout base ---- */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #ffffff;
+  color: #111111;
+}
+
+/* ---- Botones ---- */
+button, .btn {
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+  background-color: #012169;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+}
+
+.btn-primary:hover {
+  background-color: #013399;
 }
