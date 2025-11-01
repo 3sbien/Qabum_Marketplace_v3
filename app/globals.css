@@ -2,25 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ---- Layout base ---- */
-body {
-  font-family: 'Inter', sans-serif;
-  background-color: #ffffff;
-  color: #111111;
-}
+/* Base */
+html, body { height: 100%; background: #ffffff; color: #111111; }
 
-/* ---- Botones ---- */
-button, .btn {
-  transition: all 0.2s ease-in-out;
-}
-
+/* Botón primario usado en page.tsx */
 .btn-primary {
-  background-color: #012169;
-  color: white;
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.5rem;
-}
-
-.btn-primary:hover {
-  background-color: #013399;
+  @apply bg-[#012169] text-white px-5 py-2 rounded-lg shadow hover:shadow-md;
 }
