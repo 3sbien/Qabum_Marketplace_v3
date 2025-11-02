@@ -11,24 +11,18 @@ export default function Home() {
         Ingresar con Google / Sign in with Google
       </a>
 
-      {/* Logo centrado */}
-      <div className="mt-8 mb-6">
+      {/* Logo centrado (ligeramente ajustado a la derecha) */}
+      <div className="mt-10 mb-2">
         <Image
           src="/qabum-logo.png"
           alt="Qabum logo"
           width={256}
           height={256}
           priority
+          className="mx-auto md:translate-x-2"
         />
       </div>
-
-      <p className="mt-2 max-w-3xl text-sm md:text-base text-gray-600">
-        Qabum™ does not constitute a financial entity or promote financial products. All
-        activity occurs within its private platform under ethical agreements between
-        independent parties. Qabum™ no constituye una entidad financiera ni promociona
-        productos financieros. Toda la actividad se desarrolla dentro de su plataforma
-        privada, bajo acuerdos éticos entre partes independientes.
-      </p>
+      {/* Quitamos el párrafo aquí para no duplicar el texto; queda solo en el footer */}
     </main>
   );
 }
