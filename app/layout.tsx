@@ -1,7 +1,8 @@
 import "./globals.css";
 import Footer from "./components/Footer";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Qabum™",
   description: "Qabum™ – Ethical Reputational Commerce",
   icons: {
