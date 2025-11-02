@@ -15,7 +15,14 @@ export const metadata: Metadata = {
     description: "Qabum™ – Ethical Reputational Commerce",
     url: "/",
     siteName: "Qabum™",
-    images: [{ url: "/qabum-logo.png", width: 512, height: 512 }],
+    images: [
+      {
+        url: "/qabum-logo.png",
+        width: 512,
+        height: 512,
+        type: "image/png",
+      },
+    ],
     type: "website",
   },
   twitter: {
