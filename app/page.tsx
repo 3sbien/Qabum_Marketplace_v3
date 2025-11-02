@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Home() {
   return (
     <main className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
@@ -5,11 +7,22 @@ export default function Home() {
         Qabum™
       </h1>
 
-      <a href="/api/auth/signin" className="btn-primary mt-4 inline-block">
+      <a href="/api/auth/signin" className="btn-primary mt-2 inline-block">
         Ingresar con Google / Sign in with Google
       </a>
 
-      <p className="mt-6 max-w-3xl text-sm md:text-base text-gray-600">
+      {/* Logo centrado */}
+      <div className="mt-8 mb-6">
+        <Image
+          src="/qabum-logo.png"
+          alt="Qabum logo"
+          width={256}
+          height={256}
+          priority
+        />
+      </div>
+
+      <p className="mt-2 max-w-3xl text-sm md:text-base text-gray-600">
         Qabum™ does not constitute a financial entity or promote financial products. All
         activity occurs within its private platform under ethical agreements between
         independent parties. Qabum™ no constituye una entidad financiera ni promociona
