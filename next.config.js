@@ -2,10 +2,10 @@
 const nextConfig = {
   async redirects() {
     return [
-      // Redirige /api/auth/signin directo al proveedor de Google
+      // Enviar el endpoint viejo a la página "silenciosa" /signin
       {
         source: '/api/auth/signin',
-        destination: '/api/auth/signin/google',
+        destination: '/signin',
         permanent: false,
       },
     ];
