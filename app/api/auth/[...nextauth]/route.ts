@@ -10,6 +10,7 @@ const handler = NextAuth({
     }),
   ],
   session: { strategy: "jwt" },
+
   callbacks: {
     async jwt({ token, account, profile }) {
       if (account) token.provider = account.provider;
@@ -21,6 +22,10 @@ const handler = NextAuth({
     async session({ session, token }) {
       (session as any).provider = (token as any).provider;
       return session;
+    },
+    async redirect({ url, baseUrl }) {
+      // 🔁 Después del login, redirige siempre a Qabum.com
+      return "https://qabum.com";
     },
   },
 });
