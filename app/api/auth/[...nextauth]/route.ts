@@ -1,7 +1,9 @@
-import NextAuth from "next-auth";
+// app/api/auth/[...nextauth]/route.ts
+
+import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 
-const auth = NextAuth({
+const handler = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -24,10 +26,10 @@ const auth = NextAuth({
       return session;
     },
 
-    async redirect({ url, baseUrl }) {
-      return `${baseUrl}/admin`;
+    async redirect() {
+      return "https://qabum.com";
     },
   },
 });
 
-export { auth as GET, auth as POST };
+export { handler as GET, handler as POST };
