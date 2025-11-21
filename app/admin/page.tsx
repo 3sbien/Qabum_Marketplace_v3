@@ -1,48 +1,15 @@
-"use client";
-
-import { useSession, signIn, signOut } from "next-auth/react";
-
 export default function AdminPage() {
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return (
-      <main className="min-h-[60vh] flex items-center justify-center">
-        <p className="text-lg">Verificando acceso…</p>
-      </main>
-    );
-  }
-
-  if (!session) {
-    return (
-      <main className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-        <h1 className="text-2xl font-semibold mb-4">Qabum Admin</h1>
-        <p className="mb-4">
-          Para acceder al panel necesitas iniciar sesión con Google.
-        </p>
-        <button
-          onClick={() => signIn("google")}
-          className="btn-primary mt-2 inline-block"
-        >
-          Ingresar con Google
-        </button>
-      </main>
-    );
-  }
-
   return (
     <main className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-      <h1 className="text-3xl font-semibold mb-2">Qabum Admin – MVP</h1>
-      <p className="mb-4">
-        Has iniciado sesión como{" "}
-        <span className="font-medium">{session.user?.email}</span>.
+      <h1 className="text-3xl font-semibold mb-4">Qabum Admin – MVP</h1>
+      <p className="mb-2">
+        Esta es la página de administración básica de Qabum Marketplace v3.
       </p>
       <p className="mb-6">
-        Aquí irá el panel real para crear, editar y gestionar subtiendas.
+        Primero necesitábamos que <code>/admin</code> existiera y compilara sin
+        errores. Más adelante aquí añadiremos el acceso con Google y el panel
+        real de subtiendas y ventas.
       </p>
-      <button onClick={() => signOut()} className="btn-secondary">
-        Cerrar sesión
-      </button>
     </main>
   );
 }
