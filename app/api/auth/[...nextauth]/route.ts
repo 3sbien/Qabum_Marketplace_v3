@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-const handler = NextAuth({
+const auth = NextAuth({
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
@@ -18,11 +18,16 @@ const handler = NextAuth({
       }
       return token;
     },
+
     async session({ session, token }) {
       (session as any).provider = (token as any).provider;
       return session;
     },
+
+    async redirect({ url, baseUrl }) {
+      return `${baseUrl}/admin`;
+    },
   },
 });
 
-export { handler as GET, handler as POST };
+export { auth as GET, auth as POST };
