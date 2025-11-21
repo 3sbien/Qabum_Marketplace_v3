@@ -1,4 +1,3 @@
-// app/api/auth/[...nextauth]/route.ts
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -9,7 +8,6 @@ const handler = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
     }),
   ],
-
   session: { strategy: "jwt" },
 
   callbacks: {
@@ -20,15 +18,9 @@ const handler = NextAuth({
       }
       return token;
     },
-
     async session({ session, token }) {
       (session as any).provider = (token as any).provider;
       return session;
-    },
-
-    async redirect({ url, baseUrl }) {
-      // Después del login, regresar SIEMPRE al panel admin
-      return "https://qabum-marketplace-v3.vercel.app/admin";
     },
   },
 });
